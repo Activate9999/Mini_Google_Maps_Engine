@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/shortest-path.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/shortest-path",
+      "dest": "/api/shortest-path.js"
+    }
+  ]
+}
