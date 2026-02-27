@@ -2,16 +2,14 @@
 
 > A full-stack web application implementing Dijkstra's shortest path algorithm with real-world routing data from Google Maps APIs. Features interactive visualization, performance metrics, and serverless deployment.
 
-[![Live Demo](https://img.shields.io/badge/demo-live-success?style=flat-square)](https://mini-google-maps-engine.vercel.app)
+[![Live Demo](https://img.shields.io/badge/demo-live-success?style=flat-square)](https://mini-google-maps-engine-lp2o.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
 ## 🎯 Overview
 
 This project demonstrates advanced data structures and algorithms in a practical application. It constructs weighted graphs from real-world location data, implements Dijkstra's algorithm with a custom MinHeap priority queue, and visualizes the optimal path with comprehensive performance metrics.
 
-**Live Demo:** [https://mini-google-maps-engine.vercel.app](https://mini-google-maps-engine.vercel.app)
-
-**Live Demo:** [https://mini-google-maps-engine.vercel.app](https://mini-google-maps-engine.vercel.app)
+**Live Demo:** [https://mini-google-maps-engine-lp2o.vercel.app](https://mini-google-maps-engine-lp2o.vercel.app)
 
 ## ✨ Key Features
 
