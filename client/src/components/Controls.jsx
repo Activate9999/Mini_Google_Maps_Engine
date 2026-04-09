@@ -19,6 +19,10 @@ function Controls({
   onDetailModeChange,
   waypointSpacingKm,
   onWaypointSpacingChange,
+  comparisonAlgorithm,
+  onComparisonAlgorithmChange,
+  useCheckpointOrder,
+  onUseCheckpointOrderChange,
   options,
   canCompute,
   loading
@@ -86,6 +90,34 @@ function Controls({
             <option value="knn">K-nearest neighbors</option>
           </select>
         </div>
+        <div className="field">
+          <label htmlFor="comparison">Comparison algorithm</label>
+          <select
+            id="comparison"
+            value={comparisonAlgorithm}
+            onChange={(event) => onComparisonAlgorithmChange(event.target.value)}
+          >
+            <option value="astar">A* (A Star)</option>
+            <option value="bellman-ford">Bellman-Ford</option>
+          </select>
+        </div>
+        <div className="field field--inline">
+          <label htmlFor="checkpointsMode">Checkpoint journey (1 {'->'} 2 {'->'} 3 ...)</label>
+          <input
+            id="checkpointsMode"
+            type="checkbox"
+            checked={useCheckpointOrder}
+            onChange={(event) => onUseCheckpointOrderChange(event.target.checked)}
+            disabled={locations.length < 3}
+          />
+        </div>
+        {locations.length >= 3 && (
+          <p className="field__note">
+            {useCheckpointOrder
+              ? "Continuous route through all selected locations. Alternatives are disabled."
+              : "Find shortest path from Start to End and show top 3 alternatives."}
+          </p>
+        )}
         {graphType === "knn" && (
           <div className="field">
             <label htmlFor="k">Neighbors (k)</label>

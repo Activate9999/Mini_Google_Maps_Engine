@@ -26,6 +26,8 @@ function App() {
   const [roadMode, setRoadMode] = useState(true);
   const [detailMode, setDetailMode] = useState("segment");
   const [waypointSpacingKm, setWaypointSpacingKm] = useState(3);
+  const [comparisonAlgorithm, setComparisonAlgorithm] = useState("astar");
+  const [useCheckpointOrder, setUseCheckpointOrder] = useState(true);
 
   const canCompute = locations.length >= 2 && !loading;
 
@@ -92,12 +94,15 @@ function App() {
     setError("");
 
     try {
+      const checkpointsMode = useCheckpointOrder && locations.length > 2;
       const response = await axios.post(`${BACKEND_URL}/api/shortest-path`, {
         locations,
         startIndex,
         endIndex,
         graphType,
         k: graphType === "knn" ? kValue : undefined,
+        comparisonAlgorithm,
+        checkpointsMode,
         roadMode,
         detailMode: roadMode ? detailMode : "route",
         waypointSpacingKm: roadMode ? waypointSpacingKm : 0
@@ -174,6 +179,10 @@ function App() {
             onDetailModeChange={setDetailMode}
             waypointSpacingKm={waypointSpacingKm}
             onWaypointSpacingChange={setWaypointSpacingKm}
+            comparisonAlgorithm={comparisonAlgorithm}
+            onComparisonAlgorithmChange={setComparisonAlgorithm}
+            useCheckpointOrder={useCheckpointOrder}
+            onUseCheckpointOrderChange={setUseCheckpointOrder}
             options={startOptions}
             canCompute={canCompute}
             loading={loading}
