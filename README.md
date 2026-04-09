@@ -35,6 +35,13 @@ Real-time metrics displayed for every route computation:
 - Total Distance vs. Straight-line Distance
 - Detour Factor (routing efficiency)
 - Graph Type & Routing Mode
+- Algorithm comparison (Dijkstra vs A* or Bellman-Ford)
+- Weighted winner scoring using time + nodes explored + edges checked
+
+### 🧭 Journey Modes
+- **Checkpoint Journey Mode**: Continuous ordered route (1 -> 2 -> 3 -> ...)
+- **Start-End + Alternatives Mode**: Optimized Start -> End path with top 3 alternatives
+- For 3+ locations, alternatives are available in both modes
 
 ### 🚀 Modern Tech Stack
 - **Frontend**: React 18 + Vite (lightning-fast HMR)
@@ -78,8 +85,6 @@ Real-time metrics displayed for every route computation:
 ### Distance Calculation Methods
 - **Haversine Formula**: Fast great-circle distance (±0.5% accuracy)
 - **Google Distance Matrix**: Real road network distances with traffic awareness
-
-## 📋 Features
 
 ## 📋 Project Structure
 
@@ -128,11 +133,6 @@ Mini_Google_Maps_Engine/
 ### Local Development
 
 **1. Clone the repository**
-```bash
-git clone https://github.com/Activate9999/Mini_Google_Maps_Engine.git
-cd Mini_Google_Maps_Engine
-```
-
 ```bash
 git clone https://github.com/Activate9999/Mini_Google_Maps_Engine.git
 cd Mini_Google_Maps_Engine
@@ -200,6 +200,8 @@ Both deployments will auto-update on every `git push` to main branch.
   "endIndex": 1,
   "graphType": "full",        // "full" or "knn"
   "k": 3,                     // For KNN graph
+  "comparisonAlgorithm": "astar", // "astar" or "bellman-ford"
+  "checkpointsMode": false,   // true = enforce ordered checkpoints for 3+ points
   "roadMode": true,           // true = Google routing, false = Haversine
   "detailMode": "segment",    // "segment" or "overview"
   "waypointSpacingKm": 3      // Detail level for polyline
@@ -221,18 +223,42 @@ Both deployments will auto-update on every `git push` to main branch.
     "graphType": "Fully Connected Graph",
     "detourFactor": "1.18",
     "totalDistance": 821.5,   // km
-    "straightLineDistance": 696.2  // km
+    "straightLineDistance": 696.2, // km
+    "algorithmComparison": {
+      "weightedWinner": "A*",
+      "runtimeWinner": "A*",
+      "speedup": 2.0,
+      "sameDistance": true,
+      "primary": {
+        "name": "Dijkstra",
+        "executionTime": 0.08,
+        "nodesExplored": 120,
+        "edgesConsidered": 480,
+        "weightedScore": 1.0
+      },
+      "secondary": {
+        "name": "A*",
+        "executionTime": 0.04,
+        "nodesExplored": 60,
+        "edgesConsidered": 210,
+        "weightedScore": 0.46
+      },
+      "scoringModel": {
+        "formula": "normalizedScore = (time + nodes + edges) / 3",
+        "lowerIsBetter": true
+      }
+    }
   },
-  "alternatives": [...]       // Alternative routes (if available)
+  "alternatives": [...]       // Top 3 shortest alternatives (when available)
 }
 ```
 
 ## 🎯 Use Cases
 
 - **Algorithm Visualization**: Educational tool for understanding Dijkstra's algorithm
-- **Route Planning**: Compare different routing strategies (Haversine vs. road routing)
+- **Route Planning**: Continuous checkpoint journeys or start-end optimization with alternatives
 - **Performance Analysis**: Benchmark graph algorithms with real-world data
-- **Research**: Study KNN graph optimization vs. fully connected graphs
+- **Research**: Compare Dijkstra against A*/Bellman-Ford with weighted scoring metrics
 
 ## 📚 What I Learned
 
